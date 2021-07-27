@@ -1,18 +1,13 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { BankLoan } from './bankLoan.schema';
+import { IBank } from '../../config/inteface';
 
-@Schema()
-export class Bank extends mongoose.Document {
-  @Prop({ type: String, required: true, unique: true })
-  name: string;
-
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bankloanList' }],
-  })
-  bankloanList: BankLoan[];
-}
-
-const BankSchema = SchemaFactory.createForClass(Bank);
+const BankSchema = new mongoose.Schema<IBank>(
+  {
+    name: { type: String, required: true, unique: true },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 export default BankSchema;

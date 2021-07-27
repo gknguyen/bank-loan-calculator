@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { BankLoan } from 'src/mongo/schema/bankLoan.schema';
+import CONSTANT from 'src/config/constant';
+import { IBankLoan } from 'src/config/inteface';
 
 @Injectable()
 export class BankLoanService {
   constructor(
-    @InjectModel('BankLoan') private readonly bankLoanModel: Model<BankLoan>,
+    @InjectModel(CONSTANT.MONGO.DOCUMENTS.BANK_LOAN)
+    private readonly bankLoanModel: Model<IBankLoan>,
   ) {}
 
   async getBankLoanList() {
@@ -27,7 +29,7 @@ export class BankLoanService {
     }
   }
 
-  async createBankLoan(createBankLoanInput: BankLoan) {
+  async createBankLoan(createBankLoanInput: IBankLoan) {
     try {
       const bankLoan = await this.bankLoanModel.create(createBankLoanInput);
       return bankLoan;
@@ -36,7 +38,7 @@ export class BankLoanService {
     }
   }
 
-  async updateBankLoan(bankLoanId: string, updateBankLoanInput: BankLoan) {
+  async updateBankLoan(bankLoanId: string, updateBankLoanInput: IBankLoan) {
     try {
       const bankLoan = await this.bankLoanModel.findByIdAndUpdate(
         bankLoanId,

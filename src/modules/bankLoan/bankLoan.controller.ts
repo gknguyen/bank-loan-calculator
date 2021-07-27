@@ -7,15 +7,55 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import * as HttpStatus from 'http-status';
-import { BankLoan } from 'src/mongo/schema/bankLoan.schema';
+import { IBankLoan } from 'src/config/inteface';
+import {
+  BankLoanListResponseDto,
+  BankLoanResponseDto,
+  CreateBankLoanInputDto,
+  CreateBankLoanResponseDto,
+  UpdateBankLoanResponseDto,
+} from './bankLoan.dto';
 import { BankLoanService } from './bankLoan.service';
 
 @ApiTags('bank-loan')
 @Controller('bank-loan')
 export class BankLoanController {
   constructor(private readonly bankLoanService: BankLoanService) {}
+
+  @Post('')
+  @ApiOperation({
+    operationId: 'createBankLoan',
+    description: 'Create bank loan',
+  })
+  @ApiBody({
+    type: CreateBankLoanInputDto,
+    required: true,
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Create bank loan data successfully',
+    type: CreateBankLoanResponseDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Bad Request',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal Server Error',
+    type: Error,
+  })
+  createBankLoan(@Body() createBankLoanInput: IBankLoan) {
+    return this.bankLoanService.createBankLoan(createBankLoanInput);
+  }
 
   @Get()
   @ApiOperation({
@@ -25,7 +65,7 @@ export class BankLoanController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get bank loan list data successfully',
-    type: [BankLoan],
+    type: [BankLoanListResponseDto],
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -54,7 +94,7 @@ export class BankLoanController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get bank loan data successfully',
-    type: BankLoan,
+    type: BankLoanResponseDto,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -75,35 +115,6 @@ export class BankLoanController {
     return this.bankLoanService.getBankLoan(bankLoanId);
   }
 
-  @Post('')
-  @ApiOperation({
-    operationId: 'createBankLoan',
-    description: 'Create bank loan',
-  })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Create bank loan data successfully',
-    type: BankLoan,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Bad Request',
-    type: Error,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Unauthorized',
-    type: Error,
-  })
-  @ApiResponse({
-    status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal Server Error',
-    type: Error,
-  })
-  createBankLoan(@Body() createBankLoanInput: BankLoan) {
-    return this.bankLoanService.createBankLoan(createBankLoanInput);
-  }
-
   @Put(':id')
   @ApiOperation({
     operationId: 'updateBankLoan',
@@ -112,7 +123,7 @@ export class BankLoanController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Update bank loan data successfully',
-    type: BankLoan,
+    type: UpdateBankLoanResponseDto,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -131,7 +142,7 @@ export class BankLoanController {
   })
   updateBankLoan(
     @Param('id') bankLoanId: string,
-    @Body() updateBankLoanInput: BankLoan,
+    @Body() updateBankLoanInput: IBankLoan,
   ) {
     return this.bankLoanService.updateBankLoan(bankLoanId, updateBankLoanInput);
   }
@@ -144,7 +155,7 @@ export class BankLoanController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Delete bank loan data successfully',
-    type: BankLoan,
+    type: null,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
