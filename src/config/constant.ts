@@ -6,6 +6,10 @@ const CONSTANT = {
       BANK_LOAN: 'bankloan',
     },
   },
+
+  ERROR_MESSAGE: {
+    BANK_LOAN_EXISTED: 'This bank loan is already existed',
+  },
 };
 
 export default CONSTANT;

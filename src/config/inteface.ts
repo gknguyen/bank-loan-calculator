@@ -31,6 +31,7 @@ export interface ICreateBankLoanInput {
 }
 
 export interface IBankLoanListResponse {
+  _id: string;
   bank: IBank;
   no: string;
   amount: number;

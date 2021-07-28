@@ -9,8 +9,10 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import * as HttpStatus from 'http-status';
+import CONSTANT from 'src/config/constant';
 import { IBankLoan } from 'src/config/inteface';
 import {
+  BankLoanExistErrorResponseDto,
   BankLoanListResponseDto,
   BankLoanResponseDto,
   CreateBankLoanInputDto,
@@ -40,18 +42,8 @@ export class BankLoanController {
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
-    description: 'Bad Request',
-    type: Error,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Unauthorized',
-    type: Error,
-  })
-  @ApiResponse({
-    status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal Server Error',
-    type: Error,
+    description: CONSTANT.ERROR_MESSAGE.BANK_LOAN_EXISTED,
+    type: BankLoanExistErrorResponseDto,
   })
   createBankLoan(@Body() createBankLoanInput: IBankLoan) {
     return this.bankLoanService.createBankLoan(createBankLoanInput);

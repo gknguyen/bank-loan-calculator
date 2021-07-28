@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsDate, IsNumber, IsObject, IsString } from 'class-validator';
+import * as httpStatus from 'http-status';
+import CONSTANT from 'src/config/constant';
 import {
   IBank,
   IBankLoan,
@@ -76,8 +78,10 @@ export class CreateBankLoanResponseDto implements ICreateBankLoanResponse {
     description: 'bank information',
     required: true,
     example: {
-      _id: '123456',
+      _id: '6101255bd014fc8d4e1e9304',
       name: 'Vietcombank',
+      createdAt: '2021-07-28T09:37:31.255Z',
+      updatedAt: '2021-07-28T09:37:31.255Z',
     },
   })
   bank: IBank;
@@ -126,17 +130,46 @@ export class CreateBankLoanResponseDto implements ICreateBankLoanResponse {
     example: new Date('2022-01-01'),
   })
   endDate: Date;
+
+  @IsDate()
+  @ApiProperty({
+    type: 'string',
+    description: 'the create date of the record',
+    required: true,
+    example: new Date('2021-07-28T09:37:31.255Z'),
+  })
+  createdAt: Date;
+
+  @IsDate()
+  @ApiProperty({
+    type: 'string',
+    description: 'the update date of the record',
+    required: true,
+    example: new Date('2021-07-28T09:37:31.255Z'),
+  })
+  updatedAt: Date;
 }
 
 export class BankLoanListResponseDto implements IBankLoanListResponse {
+  @IsString()
+  @ApiProperty({
+    type: 'string',
+    description: 'bank loan id',
+    required: true,
+    example: '6101255bd014fc8d4e1e9303',
+  })
+  _id: string;
+
   @IsObject()
   @ApiProperty({
     type: 'object',
     description: 'bank information',
     required: true,
     example: {
-      _id: '123456',
+      _id: '6101255bd014fc8d4e1e9304',
       name: 'Vietcombank',
+      createdAt: new Date('2021-07-28T09:37:31.255Z'),
+      updatedAt: new Date('2021-07-28T09:37:31.255Z'),
     },
   })
   bank: IBank;
@@ -212,6 +245,24 @@ export class BankLoanListResponseDto implements IBankLoanListResponse {
     example: new Date('2022-01-01'),
   })
   endDate: Date;
+
+  @IsDate()
+  @ApiProperty({
+    type: 'string',
+    description: 'the create date of the record',
+    required: true,
+    example: new Date('2021-07-28T09:37:31.255Z'),
+  })
+  createdAt: Date;
+
+  @IsDate()
+  @ApiProperty({
+    type: 'string',
+    description: 'the update date of the record',
+    required: true,
+    example: new Date('2021-07-28T09:37:31.255Z'),
+  })
+  updatedAt: Date;
 }
 
 export class BankLoanResponseDto implements IBankLoanResponse {
@@ -308,4 +359,27 @@ export class UpdateBankLoanResponseDto implements IUpdateBankLoanResponse {
     example: new Date('2022-01-01'),
   })
   endDate: Date;
+}
+
+export class BankLoanExistErrorResponseDto {
+  @ApiProperty({
+    type: 'string',
+    description: 'HTTP status code',
+    example: httpStatus.BAD_REQUEST,
+  })
+  statusCode: number;
+
+  @ApiProperty({
+    type: 'string',
+    description: 'Error message',
+    example: CONSTANT.ERROR_MESSAGE.BANK_LOAN_EXISTED,
+  })
+  message: string;
+
+  @ApiProperty({
+    type: 'string',
+    description: 'Error code',
+    example: 'Bad Request',
+  })
+  errorCode: string;
 }
