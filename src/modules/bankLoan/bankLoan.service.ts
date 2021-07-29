@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import CONSTANT from 'src/config/constant';
-import { IBankLoan } from 'src/config/inteface';
+import CONSTANT from '../../config/constant';
+import { IBankLoan } from '../../config/inteface';
 
 @Injectable()
 export class BankLoanService {

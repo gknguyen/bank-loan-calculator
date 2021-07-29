@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsDate, IsNumber, IsObject, IsString } from 'class-validator';
 import * as httpStatus from 'http-status';
-import CONSTANT from 'src/config/constant';
+import CONSTANT from '../../config/constant';
 import {
   IBank,
   IBankLoan,

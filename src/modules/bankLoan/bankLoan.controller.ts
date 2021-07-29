@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import * as HttpStatus from 'http-status';
-import CONSTANT from 'src/config/constant';
-import { IBankLoan } from 'src/config/inteface';
+import CONSTANT from '../../config/constant';
+import { IBankLoan } from '../../config/inteface';
 import {
   BankLoanExistErrorResponseDto,
   BankLoanListResponseDto,

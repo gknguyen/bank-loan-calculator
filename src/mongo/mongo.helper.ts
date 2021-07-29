@@ -1,6 +1,6 @@
 import { MongooseModuleOptions } from '@nestjs/mongoose';
-import CONSTANT from 'src/config/constant';
-import ENV from 'src/config/env';
+import CONSTANT from '..//config/constant';
+import ENV from '../config/env';
 
 export default function getMongoConfig(): MongooseModuleOptions {
   return {
